@@ -27,19 +27,44 @@
           <th>Id</th>
           <th>Name</th>
           <th>NickName</th>
+          <th>Action</th>
         </tr>
 
           <?php foreach($artist as $people):?>
              <tr>
-            <th><?=$people->id;?></th>
+            <th ><?=$people->id;?></th>
             <th><?=$people->name;?></th>
             <th><?=$people->picture;?></th>
+            <th><button onclick="deleteuser(event)">Delete</button></th>
+            <?php endforeach; ?>
             </tr>
-          <?php endforeach; ?>
+
 
 
       </table>
 
     </div>
+    <script>
+    deleteuser=(e)=>{
+      let user=e.target.parentElement.parentElement.firstElementChild.innerHTML;
+      //console.log(user);
+      let url='./deleteArtist.php/?id='+user;
+      const xhr=new XMLHttpRequest();
+      xhr.open('DELETE',url,true);
+      xhr.onload=()=>{
+        if(xhr.readyState===4||xhr.status===4)
+        {
+          alert('artist deleted');
+          window.location.reload();
+        }
+        else {
+          alert('error occured');
+          window.location.reload();
+        }
+      }
+      xhr.send(null);
+    }
+
+    </script>
   </body>
 </html>
